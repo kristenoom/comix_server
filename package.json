@@ -1,43 +1,24 @@
 {
-  "name": "comix-server",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "bootstrap": "^4.3.1",
-    "lodash": "^4.17.11",
-    "react": "^17.0.1",
-    "react-codepen": "^0.1.0",
-    "react-dom": "^17.0.2",
-    "react-icons": "^3.7.0",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "^4.0.3",
-    "react-spinners": "^0.11.0",
-    "reactstrap": "^8.9.0",
-    "web-vitals": "^1.1.2",
-    "youtube-api-search": "^0.0.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+    "name": "comic-server",
+    "version": "1.0.0",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js",
+        "dev": "nodemon"
+    },
+    "author": "Team Happy",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "http-server": "^0.11.2",
+        "jsonwebtoken": "^8.5.1",
+        "pg": "^8.7.1",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.6.5"
+    },
+    "devDependencies": {},
+    "description": ""
 }

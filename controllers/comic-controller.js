@@ -1,29 +1,73 @@
-let express = require('express');
-let router = express.Router();
-let validateSession = require('../middleware/validate-session');
-const comix = require('../db').import('../models/comic');
+const router = require('express').Router();
+//const validateSession = require('../middleware/validateSession');
+//commented out for Rodney to complete configuration of validate session
+const sequelize = require('../db');
+const Comix = sequelize.import('../models/comic');
 
-router.put('/:id', validateSession, function(req, res) {
-    const updateComix = {
+/* ***************************
+***** CREATE COMIX ENTRY *****
+*************************** */
+router.post('/', /*validateSession,*/ (req, res) => {
+    const comixEntryByUser = {
+        owner_id: req.user.id,
         title: req.body.comix.title,
         issue_date: req.body.comix.issue_date,
-        status: req.body.comix.status,
-        read_status: req.body.comix.read_status
+        status: req.body.log.status,
+        read_status: req.body.log.read_status
     };
 
-    const query = { where: { id: req.params.id, owner: req.user.id} };
+    Comix.create(comixEntryByUser)
+    .then((comix) => res.status(200).json(comix))
+    .catch((err) => res.status(500).json({error:err}));
 
-    comix.update(updateComix, query)
-    .then((comics) => res.status(200).json(comics))
-    .catch((err) => res.status(500).json({ error: err.message}));
 });
 
-router.delete('/:id', validateSession, function (req, res) {
-    const query = { where: { id: req.params.id, owner: req.user.id } };
+/* ***************************
+***** RETURN COMIX ENTRY *****
+*************************** */
+router.get('/comixLog', /*validateSession,*/ (req, res) => {
+    const query = {
+        where: {
+            owner_id: req.user.id
+        }
+    };
 
-    logbook.destroy(query)
-    .then(() => res.status(200).json({ message: "Comic Removed" }))
-    .catch((err) => res.status(500).json({ error: err }));
+    Comix.findAllEntries(query)
+    .then((comix) => res.status(200).json())
+    .catch((err) => res.status(500).json({error: err}));
+});
+
+/* ***************************
+***** RETURN COMIX ENTRY *****
+***** BY INDIVIDUAL USER *****
+*************************** */
+router.get('/comixLog/:id', /*validateSession,*/ (req, res) => {
+    const query = {
+        where: {
+            id: req.params.id,
+            owner_id: req.user.id
+        }
+    };
+
+    Comix.findUserEntry(query)
+    .then((comix) => res.status(200).json(comix))
+    .catch((err) => res.status(500).json({error: err}));
+
+});
+
+/* ***************************
+***** DELETE COMIX ENTRY *****
+*************************** */
+router.delete('/comix/:id', /*validateSession,*/ (req, res) => {
+    const query
+});
+
+
+/* ***************************
+***** UPDATE COMIX ENTRY *****
+*************************** */
+router.put('/comix/:id', (req, res) => {
+    const query
 });
 
 module.exports = router;

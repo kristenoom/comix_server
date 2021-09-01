@@ -77,6 +77,6 @@ router.put('/:id', (req, res) => {
         issue_date: req.body.comix.issue_date,
         status: req.body.comix.status,
         read_status: req.body.comix.read_status
-});
+}});
 
 module.exports = router;

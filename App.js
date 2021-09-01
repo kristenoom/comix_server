@@ -3,8 +3,8 @@ let express = require("express");
 let app = express();
 let sequelize = require("./db");
 
-let user = require("./controllers/user-controller");
-let comix = require('./controllers/comic-controller');
+const user = require("./controllers/user-controller");
+const comix = require('./controllers/comic-controller');
 
 sequelize.sync();
 //sequalize.sync({force:true});

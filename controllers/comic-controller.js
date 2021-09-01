@@ -59,15 +59,23 @@ router.get('/comixLog/:id', /*validateSession,*/ (req, res) => {
 ***** DELETE COMIX ENTRY *****
 *************************** */
 router.delete('/comix/:id', /*validateSession,*/ (req, res) => {
-    const query
+    const query = { where: { id: req.params.id, owner: req.user.id } };
+
+    logbook.destroy(query)
+    .then(() => res.status(200).json({ message: "Comic Removed" }))
+    .catch((err) => res.status(500).json({ error: err }));
 });
 
 
 /* ***************************
 ***** UPDATE COMIX ENTRY *****
 *************************** */
-router.put('/comix/:id', (req, res) => {
-    const query
+router.put('/:id', (req, res) => {
+        const updateComix = {
+        title: req.body.comix.title,
+        issue_date: req.body.comix.issue_date,
+        status: req.body.comix.status,
+        read_status: req.body.comix.read_status
 });
 
 module.exports = router;

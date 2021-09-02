@@ -2,6 +2,7 @@ const router = require('express').Router();
 const validateSession = require('../middleware/validateSession');
 const Comix = require("../db").import('../models/comic');
 
+
 /* ***************************
 ***** CREATE COMIX ENTRY *****
 *************************** */

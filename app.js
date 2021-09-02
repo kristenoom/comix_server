@@ -17,4 +17,4 @@ app.use('/comic', comix)
 
 app.listen(3000, function(){
     console.log('Exceslior');
-})
+});

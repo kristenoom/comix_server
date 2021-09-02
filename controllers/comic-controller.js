@@ -1,13 +1,12 @@
 const router = require('express').Router();
-//const validateSession = require('../middleware/validateSession');
-//commented out for Rodney to complete configuration of validate session
+const validateSession = require('../middleware/validateSession');
 const sequelize = require('../db');
 const Comix = sequelize.import('../models/comic');
 
 /* ***************************
 ***** CREATE COMIX ENTRY *****
 *************************** */
-router.post('/', /*validateSession,*/ (req, res) => {
+router.post('/', validateSession, (req, res) => {
     const comixEntryByUser = {
         owner_id: req.user.id,
         title: req.body.comix.title,
@@ -25,7 +24,7 @@ router.post('/', /*validateSession,*/ (req, res) => {
 /* ***************************
 ***** RETURN COMIX ENTRY *****
 *************************** */
-router.get('/comixLog', /*validateSession,*/ (req, res) => {
+router.get('/comixLog', validateSession, (req, res) => {
     const query = {
         where: {
             owner_id: req.user.id
@@ -41,7 +40,7 @@ router.get('/comixLog', /*validateSession,*/ (req, res) => {
 ***** RETURN COMIX ENTRY *****
 ***** BY INDIVIDUAL USER *****
 *************************** */
-router.get('/comixLog/:id', /*validateSession,*/ (req, res) => {
+router.get('/comixLog/:id', validateSession, (req, res) => {
     const query = {
         where: {
             id: req.params.id,
@@ -58,10 +57,10 @@ router.get('/comixLog/:id', /*validateSession,*/ (req, res) => {
 /* ***************************
 ***** DELETE COMIX ENTRY *****
 *************************** */
-router.delete('/comix/:id', /*validateSession,*/ (req, res) => {
+router.delete('/comix/:id', validateSession, (req, res) => {
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
-    logbook.destroy(query)
+    Comix.destroy(query)
     .then(() => res.status(200).json({ message: "Comic Removed" }))
     .catch((err) => res.status(500).json({ error: err }));
 });
@@ -70,12 +69,19 @@ router.delete('/comix/:id', /*validateSession,*/ (req, res) => {
 /* ***************************
 ***** UPDATE COMIX ENTRY *****
 *************************** */
-router.put('/:id', (req, res) => {
+router.put('/:id', validateSession, function(req, res) {
         const updateComix = {
         title: req.body.comix.title,
         issue_date: req.body.comix.issue_date,
         status: req.body.comix.status,
         read_status: req.body.comix.read_status
+    };
+    
+    const query = {where: { id: req.params.id, owner: req.user.id } };
+
+    Comix.update(updateComix, query)
+    .then((comix) => res.status(200).json(comix))
+    .catch((err) => res.status(500).json({ error: err.message}));
 });
 
 module.exports = router;

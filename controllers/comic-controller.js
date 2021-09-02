@@ -1,14 +1,11 @@
-let express = require('express');
-let router = express.Router();
-//const validateSession = require('../middleware/validateSession');
-//commented out for Rodney to complete configuration of validate session
-const sequelize = require('../db');
-const Comix = sequelize.import('../models/comic');
+const router = require('express').Router();
+const validateSession = require('../middleware/validateSession');
+const Comix = require("../db").import('../models/comic');
 
 /* ***************************
 ***** CREATE COMIX ENTRY *****
 *************************** */
-router.post('/', /*validateSession,*/ (req, res) => {
+router.post('/', validateSession, (req, res) => {
     const comixEntryByUser = {
         owner_id: req.user.id,
         title: req.body.comix.title,
@@ -26,7 +23,7 @@ router.post('/', /*validateSession,*/ (req, res) => {
 /* ***************************
 ***** RETURN COMIX ENTRY *****
 *************************** */
-router.get('/comixLog', /*validateSession,*/ (req, res) => {
+router.get('/comixLog', validateSession, (req, res) => {
     const query = {
         where: {
             owner_id: req.user.id
@@ -42,7 +39,7 @@ router.get('/comixLog', /*validateSession,*/ (req, res) => {
 ***** RETURN COMIX ENTRY *****
 ***** BY INDIVIDUAL USER *****
 *************************** */
-router.get('/comixLog/:id', /*validateSession,*/ (req, res) => {
+router.get('/comixLog/:id', validateSession, (req, res) => {
     const query = {
         where: {
             id: req.params.id,
@@ -59,7 +56,7 @@ router.get('/comixLog/:id', /*validateSession,*/ (req, res) => {
 /* ***************************
 ***** DELETE COMIX ENTRY *****
 *************************** */
-router.delete('/comix/:id', /*validateSession,*/ (req, res) => {
+router.delete('/comix/:id', validateSession,(req, res) => {
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
     logbook.destroy(query)

@@ -1,5 +1,4 @@
-let express = require('express');
-let router = express.Router();
+const router = require('express').Router();
 //const validateSession = require('../middleware/validateSession');
 //commented out for Rodney to complete configuration of validate session
 const sequelize = require('../db');

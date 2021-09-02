@@ -10,8 +10,8 @@ router.post('/', validateSession, (req, res) => {
         owner_id: req.user.id,
         title: req.body.comix.title,
         issue_date: req.body.comix.issue_date,
-        status: req.body.log.status,
-        read_status: req.body.log.read_status
+        status: req.body.comix.status,
+        read_status: req.body.comix.read_status
     };
 
     Comix.create(comixEntryByUser)

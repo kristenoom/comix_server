@@ -58,7 +58,6 @@ router.get('/comixLog/:id', validateSession, (req, res) => {
 ***** DELETE COMIX ENTRY *****
 *************************** */
 router.delete('/comix/:id', validateSession, (req, res) => {
-
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
     Comix.destroy(query)

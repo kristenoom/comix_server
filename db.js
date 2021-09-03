@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 //Option 1: passing parameters separately
-const sequelize = new Sequelize('comics-server', 'postgres', 'password', {
+const sequelize = new Sequelize(process.env.NAME, 'postgres', process.env.PASS, {
     host: 'localhost',
     dialect: 'postgres',
 });

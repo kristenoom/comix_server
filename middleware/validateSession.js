@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken');
-const User = require("../db").import("../models/user");
-
+const User = require('../db').import('../models/user');
 const validateSession = (req, res, next) => {
     const token = req.headers.authorization;
     console.log('token -->', token);
-
     if(!token) {
         return res.status(403).send({auth: false, message: 'No token provided'})
     } else {
@@ -31,5 +29,4 @@ const validateSession = (req, res, next) => {
         })
     }
 }
-
 module.exports = validateSession;

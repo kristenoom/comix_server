@@ -12,7 +12,7 @@ sequelize
     console.log('Connection has been established successfully.');
   })
   .catch(err => {
-    console.error('Unable to connect to OVERWATCH:', err);
+    console.error('Unable to connect to OVERWATCH: ', err);
   });
 
 module.exports = sequelize;

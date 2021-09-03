@@ -1,20 +1,24 @@
-require('dotenv').config()
-let express = require('express');
-let app = express()
-let sequelize = require('./db');
+require('dotenv').config();
+let express = require("express");
+let app = express();
+let sequelize = require("./db");
 
-let comix = require('./controllers/comic-controller')
-let user = require('./controllers/user-controller')
+const user = require("./controllers/user-controller");
+const comix = require('./controllers/comic-controller');
 
-sequelize.sync()
-// sequlize.sync({force: true})
+sequelize.sync();
+//sequalize.sync({force:true});
 
-app.use(express.json())
+app.use(express.json());
+app.use(require("./middleware/headers"));
 
-app.use('/user', user);
+//Exposed
+app.use("/user", user);
 
-app.use('/comic', comix)
+//Protected
+//app.use(require('./middleware/validate-session'));
+app.use('/comic', comix);
 
-app.listen(3000, function(){
-    console.log('Exceslior');
-})
+app.listen(3000, function () {
+  console.log("App is listening on port 3000");
+});

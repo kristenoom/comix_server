@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const validateSession = require('../middleware/validateSession');
 const sequelize = require('../db');
-const Comix = sequelize.import('../models/comic');
+const Comix = require("../db").import('../models/comic');
 
 /* ***************************
 ***** CREATE COMIX ENTRY *****
@@ -11,8 +11,8 @@ router.post('/', validateSession, (req, res) => {
         owner_id: req.user.id,
         title: req.body.comix.title,
         issue_date: req.body.comix.issue_date,
-        status: req.body.log.status,
-        read_status: req.body.log.read_status
+        status: req.body.comix.status,
+        read_status: req.body.comix.read_status
     };
 
     Comix.create(comixEntryByUser)
@@ -58,6 +58,7 @@ router.get('/comixLog/:id', validateSession, (req, res) => {
 ***** DELETE COMIX ENTRY *****
 *************************** */
 router.delete('/comix/:id', validateSession, (req, res) => {
+
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
     Comix.destroy(query)

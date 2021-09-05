@@ -4,7 +4,7 @@ const User = require('../db').import('../models/user');
 //const bcrypt = require('bcryptjs');
 
 
-router.post('register', function (req, res) {
+router.post('/register', function (req, res) {
 
 
     User.create({
@@ -15,5 +15,6 @@ router.post('register', function (req, res) {
         res.send("This is our user endpoint!")
     )
 })
+
 
 module.exports = router;

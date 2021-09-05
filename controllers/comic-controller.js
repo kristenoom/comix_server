@@ -9,10 +9,10 @@ const Comix = require("../db").import('../models/comic');
 router.post('/', validateSession, (req, res) => {
     const comixEntryByUser = {
         owner_id: req.user.id,
-        title: req.body.comix.title,
-        issue_date: req.body.comix.issue_date,
-        status: req.body.comix.status,
-        read_status: req.body.comix.read_status
+        title: req.body.title,
+        issue_date: req.body.issue_date,
+        status: req.body.status,
+        read_status: req.body.read_status
     };
 
     Comix.create(comixEntryByUser)

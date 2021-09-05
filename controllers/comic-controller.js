@@ -58,7 +58,6 @@ router.get('/comixLog/:id', validateSession, (req, res) => {
 ***** DELETE COMIX ENTRY *****
 *************************** */
 router.delete('/comix/:id', validateSession, (req, res) => {
-
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
     Comix.destroy(query)
@@ -70,19 +69,19 @@ router.delete('/comix/:id', validateSession, (req, res) => {
 /* ***************************
 ***** UPDATE COMIX ENTRY *****
 *************************** */
-router.put('/:id', validateSession, function(req, res) {
-        const updateComix = {
-        title: req.body.comix.title,
-        issue_date: req.body.comix.issue_date,
-        status: req.body.comix.status,
-        read_status: req.body.comix.read_status
-    };
-    
-    const query = {where: { id: req.params.id, owner: req.user.id } };
+router.put('/:id', validateSession, (req, res) => {
+    const updateComix = {
+    title: req.body.comix.title,
+    issue_date: req.body.comix.issue_date,
+    status: req.body.comix.status,
+    read_status: req.body.comix.read_status
+};
 
-    Comix.update(updateComix, query)
-    .then((comix) => res.status(200).json(comix))
-    .catch((err) => res.status(500).json({ error: err.message}));
+const query = { where: { id: req.params.id, owner: req.user.id } };
+
+logbook.update(updateComix, query)
+.then((comix) => res.status(200).json(comix))
+.catch((err) => res.status(500).json({ error: err.message}));
 });
 
 module.exports = router;

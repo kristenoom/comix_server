@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const validateSession = require('../middleware/validateSession');
 const sequelize = require('../db');
-const Comix = require("../db").import('../models/comic');
+const Wishlist = require("../db").import('../models/wishlist');
 
 /* ***************************
 ***** CREATE COMIX ENTRY *****
@@ -15,8 +15,8 @@ router.post('/create', validateSession, (req, res) => {
         read_status: req.body.read_status
     };
 
-    Comix.create(comixEntryByUser)
-    .then(comix => res.status(200).json(comix))
+    Wishlist.create(comixEntryByUser)
+    .then(wishlist => res.status(200).json(wishlist))
     .catch((err) => res.status(500).json({error:err}));
 
 });
@@ -24,15 +24,15 @@ router.post('/create', validateSession, (req, res) => {
 /* ***************************
 ***** RETURN COMIX ENTRY *****
 *************************** */
-router.get('/comixLog', validateSession, (req, res) => {
+router.get('/wishlistLog', validateSession, (req, res) => {
     const query = {
         where: {
             owner_id: req.user.id
         }
     };
 
-    Comix.findAllEntries(query)
-    .then((comix) => res.status(200).json())
+    Wishlist.findAllEntries(query)
+    .then((wishlist) => res.status(200).json())
     .catch((err) => res.status(500).json({error: err}));
 });
 
@@ -40,7 +40,7 @@ router.get('/comixLog', validateSession, (req, res) => {
 ***** RETURN COMIX ENTRY *****
 ***** BY INDIVIDUAL USER *****
 *************************** */
-router.get('/comixLog/:id', validateSession, (req, res) => {
+router.get('/wishlistLog/:id', validateSession, (req, res) => {
     const query = {
         where: {
             id: req.params.id,
@@ -48,8 +48,8 @@ router.get('/comixLog/:id', validateSession, (req, res) => {
         }
     };
 
-    Comix.findUserEntry(query)
-    .then((comix) => res.status(200).json(comix))
+    Wishlist.findUserEntry(query)
+    .then((wishlist) => res.status(200).json(wishlist))
     .catch((err) => res.status(500).json({error: err}));
 
 });
@@ -57,29 +57,28 @@ router.get('/comixLog/:id', validateSession, (req, res) => {
 /* ***************************
 ***** DELETE COMIX ENTRY *****
 *************************** */
-router.delete('/comix/:id', validateSession, (req, res) => {
+router.delete('/wishlist/:id', validateSession, (req, res) => {
     const query = { where: { id: req.params.id, owner: req.user.id } };
 
-    Comix.destroy(query)
-    .then(() => res.status(200).json({ message: "Comic Removed" }))
+    Wishlist.destroy(query)
+    .then(() => res.status(200).json({ message: "Wishlist Item Removed" }))
     .catch((err) => res.status(500).json({ error: err }));
 });
-
 
 /* ***************************
 ***** UPDATE COMIX ENTRY *****
 *************************** */
 router.put('/:id', validateSession, (req, res) => {
-    const updateComix = {
-    title: req.body.comix.title,
-    issue_date: req.body.comix.issue_date,
-    status: req.body.comix.status,
-    read_status: req.body.comix.read_status
+    const updateWishlist = {
+    title: req.body.wishlist.title,
+    issue_date: req.body.wishlist.issue_date,
+    status: req.body.wishlist.status,
+    read_status: req.body.wishlist.read_status
 };
 
 const query = { where: { id: req.params.id, owner: req.user.id } };
 
-Comix.update(updateComix, query)
+Comix.update(updateWishlist, query)
 .then((comix) => res.status(200).json(comix))
 .catch((err) => res.status(500).json({ error: err.message}));
 });

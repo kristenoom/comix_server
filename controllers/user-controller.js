@@ -2,12 +2,10 @@ const router = require('express').Router();
 const User = require('../db').import('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-
 /* **********************
 **** CREATE NEW USER ****
 ********************** */
-router.post('/register', (req, res) => {
-
+router.post('/register', function (req, res) {
     User.create({
       username: req.body.user.username,
       password: bcrypt.hashSync(req.body.user.password, 13)
@@ -21,12 +19,9 @@ router.post('/register', (req, res) => {
           sessionToken: token
         })
       }
-       
     )
     .catch(err => res.status(500).json({error: err}))
-
-
-
+})
 /* *********************
 ****** USER LOGIN ******
 ********************* */

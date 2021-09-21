@@ -8,7 +8,7 @@ const comix = require('./controllers/comic-controller');
 const wishlist = require('./controllers/wishlist-controller');
 
 sequelize.sync();
-// sequelize.sync({force:true});
+//sequelize.sync({force:true});
 
 app.use(express.json());
 app.use(require("./middleware/headers"));

@@ -1,8 +1,11 @@
 const Sequelize = require('sequelize');
 
 //Option 1: passing parameters separately
-const sequelize = new Sequelize(process.env.NAME, 'postgres', process.env.PASS, {
-    host: 'localhost',
+//const sequelize = new Sequelize(process.env.NAME, 'postgres', process.env.PASS, { /* PRE HEROKU */
+    // host: 'localhost',
+//     dialect: 'postgres',
+// });
+const sequelize = new Sequelize(process.env.DATABASE_URL, { /*HEROKU*/
     dialect: 'postgres',
 });
 

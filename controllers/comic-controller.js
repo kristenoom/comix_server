@@ -31,8 +31,8 @@ router.get('/comixLog', validateSession, (req, res) => {
         }
     };
 
-    Comix.findAllEntries(query)
-    .then((comix) => res.status(200).json())
+    Comix.findAll(query)
+    .then((comix) => res.status(200).json(comix))
     .catch((err) => res.status(500).json({error: err}));
 });
 
@@ -58,7 +58,7 @@ router.get('/comixLog/:id', validateSession, (req, res) => {
 ***** DELETE COMIX ENTRY *****
 *************************** */
 router.delete('/comix/:id', validateSession, (req, res) => {
-    const query = { where: { id: req.params.id, owner: req.user.id } };
+    const query = { where: { id: req.params.id, owner_id: req.user.id } };
 
     Comix.destroy(query)
     .then(() => res.status(200).json({ message: "Comic Removed" }))
@@ -71,13 +71,13 @@ router.delete('/comix/:id', validateSession, (req, res) => {
 *************************** */
 router.put('/:id', validateSession, (req, res) => {
     const updateComix = {
-    title: req.body.comix.title,
-    issue_date: req.body.comix.issue_date,
-    status: req.body.comix.status,
-    read_status: req.body.comix.read_status
+    title: req.body.title,
+    issue_date: req.body.issue_date,
+    status: req.body.status,
+    read_status: req.body.read_status
 };
 
-const query = { where: { id: req.params.id, owner: req.user.id } };
+const query = { where: { id: req.params.id, owner_id: req.user.id } };
 
 Comix.update(updateComix, query)
 .then((comix) => res.status(200).json(comix))

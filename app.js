@@ -5,9 +5,10 @@ let sequelize = require("./db");
 
 const user = require("./controllers/user-controller");
 const comix = require('./controllers/comic-controller');
+const wishlist = require('./controllers/wishlist-controller');
 
 sequelize.sync();
-//sequalize.sync({force:true});
+// sequelize.sync({force:true});
 
 app.use(express.json());
 app.use(require("./middleware/headers"));
@@ -18,6 +19,7 @@ app.use("/user", user);
 //Protected
 //app.use(require('./middleware/validate-session'));
 app.use('/comic', comix);
+app.use('/wishlist', wishlist);
 
 app.listen(3000, function () {
   console.log("App is listening on port 3000");

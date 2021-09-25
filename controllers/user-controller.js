@@ -24,23 +24,10 @@ router.post('/register', (req, res) => {
        
     )
     .catch(err => res.status(500).json({error: err}))
-
-    User.create(userForm)
-    .then(function createSuccess(user) {
-        let token = jwt.sign({
-            id: user.id
-        }, process.env.JWT_SECRET, {
-            expiresIn: 60 * 60 * 24
-        }
-        );
-        res.status(200).json({
-            user: user,
-            message: 'User successfully created!',
-            sessionToken: token
-        });
     })
-    .catch((err) => res.status(500).json({error: err}));
-});
+
+
+
 
 /* *********************
 ****** USER LOGIN ******
